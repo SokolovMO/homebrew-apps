@@ -20,7 +20,7 @@ class CaskTests(unittest.TestCase):
             self.assertIn('sha256 "' + "a" * 64 + '"', output)
             self.assertIn('depends_on arch: :arm64', output)
             self.assertIn('auto_updates true', output)
-            self.assertIn('ENV["MULTI_APPS_ALLOW_UNNOTARIZED"] == "1"', output)
+            self.assertIn('if [ "$MULTI_APPS_ALLOW_UNNOTARIZED" = "1" ]', output)
             self.assertIn('/usr/bin/codesign', output)
             self.assertIn('/usr/bin/xattr', output)
             self.assertNotIn('zap ', output)

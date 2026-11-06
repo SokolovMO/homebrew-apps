@@ -9,19 +9,18 @@ cask "multishift" do
 
   auto_updates true
   depends_on arch: :arm64
-  depends_on macos: ">= :sonoma"
+  depends_on macos: :sonoma
 
   app "MultiShift.app"
 
-  postflight do
-    if ENV["MULTI_APPS_ALLOW_UNNOTARIZED"] == "1"
-      system_command "/usr/bin/codesign",
-                     args: ["--verify", "--deep", "--strict", "#{appdir}/MultiShift.app"],
-                     must_succeed: true
-      system_command "/usr/bin/xattr",
-                     args: ["-dr", "com.apple.quarantine", "#{appdir}/MultiShift.app"],
-                     must_succeed: true
-    end
+  postflight_steps do
+    run "/bin/sh",
+        args: ["-c", <<~'SHELL', "multi-apps-quarantine", "{{appdir}}/MultiShift.app"]
+          if [ "$MULTI_APPS_ALLOW_UNNOTARIZED" = "1" ]; then
+            /usr/bin/codesign --verify --deep --strict "$1" &&
+              /usr/bin/xattr -dr com.apple.quarantine "$1"
+          fi
+        SHELL
   end
 
   caveats <<~EOS
