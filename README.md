@@ -7,11 +7,11 @@ MultiSwitcher requires macOS 15+; MultiShift requires macOS 14+.
 
 ```sh
 brew tap SokolovMO/apps
-MULTI_APPS_ALLOW_UNNOTARIZED=1 brew install --cask SokolovMO/apps/multiswitcher
-MULTI_APPS_ALLOW_UNNOTARIZED=1 brew install --cask SokolovMO/apps/multishift
+HOMEBREW_MULTI_APPS_ALLOW_UNNOTARIZED=1 brew install --cask SokolovMO/apps/multiswitcher
+HOMEBREW_MULTI_APPS_ALLOW_UNNOTARIZED=1 brew install --cask SokolovMO/apps/multishift
 ```
 
-The apps are not Apple-notarized. `MULTI_APPS_ALLOW_UNNOTARIZED=1` explicitly asks the cask to verify the code
+The apps are not Apple-notarized. `HOMEBREW_MULTI_APPS_ALLOW_UNNOTARIZED=1` explicitly asks the cask to verify the code
 signature and remove quarantine only from the installed app. Without this opt-in,
 normal Homebrew quarantine behavior remains. Homebrew 7 removed the old
 `--no-quarantine` option. Use it only if you trust this
@@ -24,8 +24,8 @@ If the app is already in Applications, do not use `--force` or delete its data.
 Homebrew can adopt a byte-identical copy:
 
 ```sh
-MULTI_APPS_ALLOW_UNNOTARIZED=1 brew install --cask --adopt SokolovMO/apps/multiswitcher
-MULTI_APPS_ALLOW_UNNOTARIZED=1 brew install --cask --adopt SokolovMO/apps/multishift
+HOMEBREW_MULTI_APPS_ALLOW_UNNOTARIZED=1 brew install --cask --adopt SokolovMO/apps/multiswitcher
+HOMEBREW_MULTI_APPS_ALLOW_UNNOTARIZED=1 brew install --cask --adopt SokolovMO/apps/multishift
 ```
 
 If the installed copy differs, finish its work and use the application's updater
@@ -42,7 +42,7 @@ this path replaces the bundle without the app's native progress window.
 
 ```sh
 brew update
-MULTI_APPS_ALLOW_UNNOTARIZED=1 brew upgrade --cask SokolovMO/apps/multiswitcher SokolovMO/apps/multishift
+HOMEBREW_MULTI_APPS_ALLOW_UNNOTARIZED=1 brew upgrade --cask SokolovMO/apps/multiswitcher SokolovMO/apps/multishift
 ```
 
 Both casks declare `auto_updates true`: a blanket `brew upgrade` normally skips
