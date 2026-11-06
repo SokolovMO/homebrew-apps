@@ -1,6 +1,6 @@
 cask "multiswitcher" do
-  version "0.4.0,70"
-  sha256 "a407998a704a0d0cc13e3483af2b02c6706b39ef148e883330ca1c6639832baf"
+  version "0.4.0,72"
+  sha256 "f0a3413c6273f55bbfc7a63d4aa49ece9575d020bdfa17e6f00ad15c95d1e205"
 
   url "https://sokolovmo.ru/multiswitcher/MultiSwitcher-#{version.csv.first}-#{version.csv.second}-arm64.zip"
   name "MultiSwitcher"
