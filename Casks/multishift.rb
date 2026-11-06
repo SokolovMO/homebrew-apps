@@ -15,7 +15,7 @@ cask "multishift" do
 
   postflight_steps do
     run "/bin/sh",
-        args: ["-c", <<~'SHELL', "multi-apps-quarantine", "{{appdir}}/MultiShift.app"]
+        args: ["-c", <<~SHELL, "multi-apps-quarantine", "{{appdir}}/MultiShift.app"]
           if [ "$MULTI_APPS_ALLOW_UNNOTARIZED" = "1" ]; then
             /usr/bin/codesign --verify --deep --strict "$1" &&
               /usr/bin/xattr -dr com.apple.quarantine "$1"
