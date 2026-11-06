@@ -1,6 +1,6 @@
 # Multi apps for Homebrew
 
-Official third-party tap for MultiSwitcher and MultiShift. Apple Silicon only.
+Official third-party tap for MultiSwitcher and MultiShift. Homebrew 7+ and Apple Silicon.
 MultiSwitcher requires macOS 15+; MultiShift requires macOS 14+.
 
 ## Install

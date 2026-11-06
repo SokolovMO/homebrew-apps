@@ -47,14 +47,11 @@ def render(token, manifest):
 
   app "{name}.app"
 
-  postflight_steps do
-    run "/bin/sh",
-        args: ["-c", <<~SHELL, "multi-apps-quarantine", "{{{{appdir}}}}/{name}.app"]
-          if [ "$MULTI_APPS_ALLOW_UNNOTARIZED" = "1" ]; then
-            /usr/bin/codesign --verify --deep --strict "$1" &&
-              /usr/bin/xattr -dr com.apple.quarantine "$1"
-          fi
-        SHELL
+  if ENV["MULTI_APPS_ALLOW_UNNOTARIZED"] == "1"
+    postflight_steps do
+      run "/usr/bin/codesign", args: ["--verify", "--deep", "--strict", "{{{{appdir}}}}/{name}.app"]
+      run "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "{{{{appdir}}}}/{name}.app"]
+    end
   end
 
   caveats <<~EOS

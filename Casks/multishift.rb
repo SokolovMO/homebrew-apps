@@ -13,14 +13,11 @@ cask "multishift" do
 
   app "MultiShift.app"
 
-  postflight_steps do
-    run "/bin/sh",
-        args: ["-c", <<~SHELL, "multi-apps-quarantine", "{{appdir}}/MultiShift.app"]
-          if [ "$MULTI_APPS_ALLOW_UNNOTARIZED" = "1" ]; then
-            /usr/bin/codesign --verify --deep --strict "$1" &&
-              /usr/bin/xattr -dr com.apple.quarantine "$1"
-          fi
-        SHELL
+  if ENV["MULTI_APPS_ALLOW_UNNOTARIZED"] == "1"
+    postflight_steps do
+      run "/usr/bin/codesign", args: ["--verify", "--deep", "--strict", "{{appdir}}/MultiShift.app"]
+      run "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "{{appdir}}/MultiShift.app"]
+    end
   end
 
   caveats <<~EOS
