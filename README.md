@@ -17,7 +17,7 @@ normal Homebrew quarantine behavior remains. Homebrew 7 removed the old
 `--no-quarantine` option. Use it only if you trust this
 publisher. This consent applies to both apps if named in the same command.
 It does not disable Gatekeeper for other apps. Homebrew verifies each
-ZIP against the SHA256 pinned in this Git repository; these checks do not provide
+DMG against the SHA256 pinned in this Git repository; these checks do not provide
 Apple notarization or an independent security audit.
 
 If the app is already in Applications, do not use `--force` or delete its data.
@@ -55,7 +55,7 @@ history are preserved. No `zap` cleanup is defined.
 
 ## Publish a release
 
-After publishing and checking the application's immutable release ZIP:
+After publishing and checking the application's immutable release DMG:
 
 ```sh
 python3 scripts/update_casks.py
@@ -67,8 +67,11 @@ git commit -m "chore: update app casks"
 git push
 ```
 
-The refresh command validates both public manifests, downloads both pinned ZIPs,
+The refresh command validates both public manifests, downloads both pinned DMGs,
 checks size and SHA256, then writes the casks. A failure leaves existing casks
 unchanged. `python3 scripts/update_casks.py --check` verifies freshness without
 editing. Refresh the tap after every public build; publishing an app alone does
-not change the cask. Never reuse an archive URL for different bytes.
+not change the cask. Never reuse an installer URL for different bytes.
+
+A daily read-only freshness check also runs in GitHub Actions. A failure reports
+that a manual tap refresh is needed; it never commits, pushes, or publishes.

@@ -1,8 +1,8 @@
 cask "multiswitcher" do
-  version "0.4.0,72"
-  sha256 "f0a3413c6273f55bbfc7a63d4aa49ece9575d020bdfa17e6f00ad15c95d1e205"
+  version "0.4.4,76"
+  sha256 "631d519448024cfa3090e57ca1e8bd11c70cdb6b06636310ad526af108dd9fed"
 
-  url "https://sokolovmo.ru/multiswitcher/MultiSwitcher-#{version.csv.first}-#{version.csv.second}-arm64.zip"
+  url "https://sokolovmo.ru/multiswitcher/MultiSwitcher-#{version.csv.first}-#{version.csv.second}-arm64.dmg"
   name "MultiSwitcher"
   desc "Keyboard layout correction"
   homepage "https://sokolovmo.ru/multiswitcher/"

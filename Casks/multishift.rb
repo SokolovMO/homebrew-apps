@@ -1,8 +1,8 @@
 cask "multishift" do
   version "0.4.1,11"
-  sha256 "d155c1481b1c0c164a3d4caff23a2c198de26855978901519781a2ceb6a4514d"
+  sha256 "0c9ae2e01f9b89bfd51c51920cd0db6dcc4ccc3811d89873fbcf2c8ae572779a"
 
-  url "https://sokolovmo.ru/multishift/MultiShift-#{version.csv.first}-#{version.csv.second}-arm64.zip"
+  url "https://sokolovmo.ru/multishift/MultiShift-#{version.csv.first}-#{version.csv.second}-arm64.dmg"
   name "MultiShift"
   desc "File conversion and tools for Finder"
   homepage "https://sokolovmo.ru/multishift/"

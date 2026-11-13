@@ -1,4 +1,4 @@
-"""Refresh pinned casks from published manifests; verify ZIPs before writing."""
+"""Refresh pinned casks from published manifests; verify DMGs before writing."""
 import argparse
 import hashlib
 import json
@@ -23,20 +23,20 @@ def render(token, manifest):
         raise ValueError("Invalid build number")
     if manifest["architecture"] != "arm64" or manifest["minimum_macos"] != minimum:
         raise ValueError("Unexpected platform requirements")
-    expected = f"{name}-{version}-{build}-arm64.zip"
-    if manifest["archive"] != expected:
-        raise ValueError("Unexpected archive name")
-    digest = manifest["sha256"]
+    expected = f"{name}-{version}-{build}-arm64.dmg"
+    if manifest["installer"] != expected:
+        raise ValueError("Unexpected installer name")
+    digest = manifest["installer_sha256"]
     if not isinstance(digest, str) or not re.fullmatch(r"[a-f0-9]{64}", digest):
         raise ValueError("Invalid SHA256")
-    size = manifest["bytes"]
+    size = manifest["installer_bytes"]
     if type(size) is not int or not 0 < size <= 1024**3:
-        raise ValueError("Invalid archive size")
+        raise ValueError("Invalid installer size")
     return f'''cask "{token}" do
   version "{version},{build}"
   sha256 "{digest}"
 
-  url "https://sokolovmo.ru/{token}/{name}-#{{version.csv.first}}-#{{version.csv.second}}-arm64.zip"
+  url "https://sokolovmo.ru/{token}/{name}-#{{version.csv.first}}-#{{version.csv.second}}-arm64.dmg"
   name "{name}"
   desc "{description}"
   homepage "https://sokolovmo.ru/{token}/"
@@ -95,9 +95,9 @@ def main():
             download(base + "latest.json", manifest_file, 65536)
             manifest = json.loads(manifest_file.read_text())
             content = render(token, manifest)
-            size, digest = download(base + manifest["archive"], folder / manifest["archive"], manifest["bytes"])
-            if (size, digest) != (manifest["bytes"], manifest["sha256"]):
-                raise ValueError(f"{token}: archive size/SHA256 mismatch")
+            size, digest = download(base + manifest["installer"], folder / manifest["installer"], manifest["installer_bytes"])
+            if (size, digest) != (manifest["installer_bytes"], manifest["installer_sha256"]):
+                raise ValueError(f"{token}: installer size/SHA256 mismatch")
             rendered[token] = content
             print(f"Verified {token} {manifest['version']} ({manifest['build']})")
     # A failed second download never leaves a partly refreshed tap.
