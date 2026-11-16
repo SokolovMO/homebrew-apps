@@ -1,6 +1,6 @@
 cask "multishift" do
-  version "0.4.1,11"
-  sha256 "0c9ae2e01f9b89bfd51c51920cd0db6dcc4ccc3811d89873fbcf2c8ae572779a"
+  version "0.4.2,14"
+  sha256 "9cb9055acbed7b6b27e1feee45813703b954c67ca4a1d16ce0af071fb17cd29d"
 
   url "https://sokolovmo.ru/multishift/MultiShift-#{version.csv.first}-#{version.csv.second}-arm64.dmg"
   name "MultiShift"
